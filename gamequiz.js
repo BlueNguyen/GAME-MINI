@@ -26,7 +26,6 @@ var scoreText;
 var playAgainButton;
 var nextLevelButton; // Nút chuyển sang level tiếp theo
 
-
 function preload() {
   this.load.image(
     "background",
@@ -126,8 +125,6 @@ function showQuestion() {
   }
 }
 
-
-
 function checkAnswer(index) {
   var correctAnswer = questions[currentQuestion].correct;
 
@@ -147,9 +144,7 @@ function checkAnswer(index) {
   // Kiểm tra số câu hỏi đúng
   if (correctAnswersCount === 10 && currentLevel === 1) {
     nextLevelButton.setVisible(true); // Hiện nút chuyển sang level tiếp theo
-    questionText.setText(
-      "Congratulations!"
-    );
+    questionText.setText("Congratulations!");
     answerButtons.forEach((btn) => btn.setText("")); // Hide answer buttons
   } else {
     showQuestion(); // Continue to the next question
@@ -233,7 +228,6 @@ function goToNextLevel() {
   loadLevelQuestions(questionData); // Nạp câu hỏi cho level mới
   showQuestion(); // Hiện câu hỏi mới cho level tiếp theo
 }
-
 
 function loadLevelQuestions(data) {
   console.log("Loading questions for level: " + currentLevel);
