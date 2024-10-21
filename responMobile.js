@@ -1,16 +1,24 @@
+// Tính toán kích thước font dựa trên cả chiều rộng và chiều cao màn hình
 let fontSize = Math.max(
   Math.min(window.innerWidth / 25, window.innerHeight / 25),
   16
 );
 
-scoreText = this.add.text(window.innerWidth - 200, 20, "Score: " + score, {
-  fontSize: fontSize + "px",
-  fill: "#ffffff",
-});
+// Cập nhật vị trí của văn bản scoreText
+scoreText = this.add.text(
+  window.innerWidth * 0.75,
+  window.innerHeight * 0.05,
+  "Score: " + score,
+  {
+    fontSize: fontSize + "px",
+    fill: "#ffffff",
+  }
+);
 
+// Điều chỉnh vị trí và kích thước các nút trả lời
 for (let i = 0; i < 4; i++) {
   let btn = this.add
-    .text(window.innerWidth / 8, (window.innerHeight / 6) * (i + 1), "", {
+    .text(window.innerWidth * 0.2, window.innerHeight * (0.3 + i * 0.1), "", {
       fontSize: fontSize + "px",
       fill: "#ffffff",
       backgroundColor: "#0066cc",
@@ -24,45 +32,14 @@ for (let i = 0; i < 4; i++) {
   answerButtons.push(btn);
 }
 
-this.bg.setSize(window.innerWidth, window.innerHeight);
-
-let fullScreenButton = this.add
-  .text(20, 20, "Full Screen", {
-    fontSize: "24px",
-    fill: "#ffffff",
-  })
-  .setInteractive({ useHandCursor: true })
-  .on("pointerdown", () => {
-    if (this.scale.isFullscreen) {
-      this.scale.stopFullscreen();
-    } else {
-      this.scale.startFullscreen();
-    }
-  });
-
-window.addEventListener("resize", () => {
-  game.scale.resize(window.innerWidth, window.innerHeight);
-
+if (window.innerWidth < 500) {
   fontSize = Math.max(
-    Math.min(window.innerWidth / 25, window.innerHeight / 25),
-    16
-  );
-  scoreText.setStyle({ fontSize: fontSize + "px" });
+    Math.min(window.innerWidth / 30, window.innerHeight / 30),
+    14
+  ); // Giảm fontSize cho màn hình nhỏ
+}
 
-  answerButtons.forEach((btn, i) => {
-    btn
-      .setFontSize(fontSize + "px")
-      .setPadding(Math.max(fontSize / 2, 10))
-      .setPosition(window.innerWidth / 8, (window.innerHeight / 6) * (i + 1));
-  });
-
-  this.bg.setSize(window.innerWidth, window.innerHeight);
-});
-
-if (
-  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  )
-) {
-  this.scale.startFullscreen();
+// Kiểm tra nếu thiết bị đang ở chế độ dọc và cảnh báo người dùng
+if (window.innerWidth < window.innerHeight) {
+  alert("Hãy xoay ngang thiết bị của bạn để có trải nghiệm tốt hơn.");
 }
