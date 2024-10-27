@@ -237,25 +237,34 @@ function loadLevelQuestions(data) {
 }
 
 function create() {
-  scene = this; // Lưu trữ đối tượng scene trong biến toàn cục
+  scene = this;
 
-  this.bg = this.add.tileSprite(400, 300, 800, 600, "background");
+  this.bg = this.add.tileSprite(
+    window.innerWidth / 2,
+    window.innerHeight / 2,
+    800,
+    600,
+    "background"
+  );
 
   var questionData = this.cache.json.get("questionData");
   loadLevelQuestions(questionData);
 
-  scoreText = this.add.text(600, 20, "Score: " + score, {
-    fontSize: "24px",
-    fill: "#ffffff",
-  });
+  scoreText = this.add
+    .text(window.innerWidth / 2, 20, "Score: " + score, {
+      fontSize: "24px",
+      fill: "#ffffff",
+    })
+    .setOrigin(0.5); // Căn giữa theo chiều ngang
 
   questionText = this.add
-    .text(100, 50, "", { fontSize: "32px", fill: "#ffffff" })
+    .text(window.innerWidth / 2, 50, "", { fontSize: "32px", fill: "#ffffff" })
+    .setOrigin(0.5) // Căn giữa theo chiều ngang
     .setAlpha(0);
 
   for (let i = 0; i < 4; i++) {
     let btn = this.add
-      .text(100, 150 + i * 60, "", {
+      .text(window.innerWidth / 2, 150 + i * 60, "", {
         fontSize: "24px",
         fill: "#ffffff",
         backgroundColor: "#0066cc",
@@ -264,13 +273,13 @@ function create() {
       .setInteractive({ useHandCursor: true })
       .on("pointerdown", () => checkAnswer(i))
       .on("pointerover", () => btn.setStyle({ fill: "#ff0" }))
-      .on("pointerout", () => btn.setStyle({ fill: "#fff" }));
+      .on("pointerout", () => btn.setStyle({ fill: "#fff" }))
+      .setOrigin(0.5); // Căn giữa theo chiều ngang
     answerButtons.push(btn);
   }
 
-  // Create "Play Again" button (initially hidden)
   playAgainButton = this.add
-    .text(300, 500, "Play Again", {
+    .text(window.innerWidth / 2, 500, "Play Again", {
       fontSize: "32px",
       fill: "#ffffff",
       backgroundColor: "#0066cc",
@@ -278,11 +287,11 @@ function create() {
     .setPadding(10)
     .setInteractive({ useHandCursor: true })
     .on("pointerdown", resetGame)
-    .setVisible(false); // Initially hidden
+    .setVisible(false)
+    .setOrigin(0.5); // Căn giữa theo chiều ngang
 
-  // Create "Next Level" button (initially hidden)
   nextLevelButton = this.add
-    .text(300, 500, "Next Level", {
+    .text(window.innerWidth / 2, 550, "Next Level", {
       fontSize: "32px",
       fill: "#ffffff",
       backgroundColor: "#0066cc",
@@ -290,7 +299,8 @@ function create() {
     .setPadding(10)
     .setInteractive({ useHandCursor: true })
     .on("pointerdown", goToNextLevel)
-    .setVisible(false); // Initially hidden
+    .setVisible(false)
+    .setOrigin(0.5); // Căn giữa theo chiều ngang
 
   this.tweens.add({
     targets: questionText,
